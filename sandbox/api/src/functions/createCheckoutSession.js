@@ -36,8 +36,8 @@ export const handler = async (event, context) => {
       },
     ],
     mode: 'payment',
-    success_url: `http://localhost:8910/success.html`,
-    cancel_url: `http://localhost:8910/cancel.html`,
+    success_url: `http://localhost:8910/success?event=checkout`,
+    cancel_url: `http://localhost:8910/cancel?event=checkout`,
   });
 
   return {
@@ -47,8 +47,6 @@ export const handler = async (event, context) => {
       'Authorization': `Bearer ${process.env.STRIPE_SK_TEST}`
     },
 
-    body: JSON.stringify({
-      data: session
-    })
+    body: JSON.stringify(session)
   }
 }

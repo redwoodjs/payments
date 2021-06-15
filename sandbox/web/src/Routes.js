@@ -13,9 +13,9 @@ import SandboxLayout from './layouts/SandboxLayout/SandboxLayout'
 const Routes = () => {
   return (
     <Router>
-      <Route path="/success" page={SuccessPage} name="success" />
-      <Route path="/cancel" page={CancelPage} name="cancel" />
       <Set wrap={SandboxLayout}>
+        <Route path="/success" page={SuccessPage} name="success" />
+        <Route path="/cancel" page={CancelPage} name="cancel" />
         <Route path="/payment-intent-graphql" page={PaymentIntentGraphqlPage} name="paymentIntentGraphql" />
         <Route path="/prebuilt-checkout" page={PrebuiltCheckoutPage} name="prebuiltCheckout" />
         <Route path="/custom-payment-flow" page={CustomPaymentFlowPage} name="customPaymentFlow" />

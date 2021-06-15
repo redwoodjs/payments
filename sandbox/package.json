@@ -19,6 +19,7 @@
     "yarn": "1.x"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^1.15.0",
     "stripe": "^8.154.0"
   }
 }
