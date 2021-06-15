@@ -8,6 +8,8 @@ type QueryParams = Record<string | number, string | number | boolean>
 declare module '@redwoodjs/router' {
   interface AvailableRoutes {
     // Only "<Route />" components with a "name" and "path" prop will be populated here.
+    success: (params?: RouteParams<"/success"> & QueryParams) => "/success"
+    cancel: (params?: RouteParams<"/cancel"> & QueryParams) => "/cancel"
     paymentIntentGraphql: (params?: RouteParams<"/payment-intent-graphql"> & QueryParams) => "/payment-intent-graphql"
     prebuiltCheckout: (params?: RouteParams<"/prebuilt-checkout"> & QueryParams) => "/prebuilt-checkout"
     customPaymentFlow: (params?: RouteParams<"/custom-payment-flow"> & QueryParams) => "/custom-payment-flow"
