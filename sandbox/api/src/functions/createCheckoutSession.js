@@ -18,27 +18,9 @@ const stripe = require('stripe')(process.env.STRIPE_SK_TEST)
  * @param { Context } context - contains information about the invocation,
  * function, and execution environment.
  */
-export const handler = async (event, context) => {
+export const handler = async ({body}, context) => {
   logger.info('Invoked createCheckoutSession function')
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    line_items: [
-      {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'Stubborn Attachments',
-            images: ['https://i.imgur.com/EHyR2nP.png'],
-          },
-          unit_amount: 2000,
-        },
-        quantity: 1,
-      },
-    ],
-    mode: 'payment',
-    success_url: `http://localhost:8910/success?event=checkout`,
-    cancel_url: `http://localhost:8910/cancel?event=checkout`,
-  });
+  const session = await stripe.checkout.sessions.create(JSON.parse(body));
 
   return {
     statusCode: 200,
