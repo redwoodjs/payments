@@ -1,5 +1,5 @@
 import { logger } from 'src/lib/logger'
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc')
+const stripe = require('stripe')(process.env.STRIPE_SK_TEST)
 
 /**
  * The handler function is your code that processes http request events.

@@ -23,7 +23,7 @@ const PrebuiltCheckoutPage = () => {
     ],
     mode: 'payment',
     success_url: `http://localhost:8910/success`,
-    cancel_url: `http://localhost:8910/cancel`,
+    cancel_url: `http://localhost:8910/`,
   })
   //   const stripe = await stripePromise;
   //   const response = await global.fetch(`${global.__REDWOOD__API_PROXY_PATH}/createCheckoutSession`, {
