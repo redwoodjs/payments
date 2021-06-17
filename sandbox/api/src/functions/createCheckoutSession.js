@@ -1,7 +1,3 @@
-import { logger } from 'src/lib/logger'
-
-const stripe = require('stripe')(process.env.STRIPE_SK_TEST)
-
 /**
  * The handler function is your code that processes http request events.
  * You can use return and throw to send a response or error, respectively.
@@ -18,17 +14,8 @@ const stripe = require('stripe')(process.env.STRIPE_SK_TEST)
  * @param { Context } context - contains information about the invocation,
  * function, and execution environment.
  */
-export const handler = async ({body}, context) => {
-  logger.info('Invoked createCheckoutSession function')
-  const session = await stripe.checkout.sessions.create(JSON.parse(body));
 
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.STRIPE_SK_TEST}`
-    },
+// This would be generated
+import { createSessionHandler } from 'rw-payments'
 
-    body: JSON.stringify(session)
-  }
-}
+export const handler = async(...args) => await createSessionHandler(...args)
