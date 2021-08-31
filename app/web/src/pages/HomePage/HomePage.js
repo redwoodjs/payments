@@ -1,24 +1,13 @@
 import { Link, routes } from '@redwoodjs/router'
-import { MetaTags } from '@redwoodjs/web'
 
 const HomePage = () => {
   return (
     <>
-      <MetaTags
-        title="redwoodjs-stripe POC"
-        description="Proof of Concept for the Redwood + Stripe integration package"
-        /* you should un-comment description and add a unique description, 155 characters or less
-      You can look at this documentation for best practices : https://developers.google.com/search/docs/advanced/appearance/good-titles-snippets */
-      />
+      <h2>Produce for Sale</h2>
+      <p>A list of products from Stripe</p>
 
-      <h1>redwoodjs-stripe POC</h1>
-      <p>This is a proof of concept for the redwoodjs-stripe package based off of a proposal doc</p>
-      <ul>
-        <li><Link to={routes.oneTimeCheckout()}>One-time Checkout Payment Flow</Link></li>
-        <li><Link to={routes.subscriptionCheckout()}>Subscription Checkout Payment Flow</Link>
-</li>
-      </ul>
-
+      <h2>Farmer's Table Subscription</h2>
+      <p>Get a weekly basket of seasonal fruits & veggies grown on The Farm</p>
     </>
   )
 }

@@ -1,0 +1,55 @@
+* {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.site-header a {
+  color: #0a0a0a;
+  text-decoration: none;
+}
+
+.site-header h1 {
+  margin: 0.5em 0 ;
+}
+
+.site-wrapper {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.site-wrapper__content {
+  width: 80%;
+  max-width: 2049px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  align-content: baseline;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.list--no-style {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.bottom-border {
+  border-bottom: solid #0a0a0a 1px;
+}
+
+.cart-btn {
+  border: none;
+  background: none;
+  padding: 0 1.2rem;
+  font-size: 1.125em;
+}
+
+.cart-btn:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

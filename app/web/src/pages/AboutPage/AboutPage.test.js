@@ -1,11 +1,11 @@
 import { render } from '@redwoodjs/testing/web'
 
-import OneTimeCheckoutPage from './OneTimeCheckoutPage'
+import AboutPage from './AboutPage'
 
-describe('OneTimeCheckoutPage', () => {
+describe('AboutPage', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<OneTimeCheckoutPage />)
+      render(<AboutPage />)
     }).not.toThrow()
   })
 })

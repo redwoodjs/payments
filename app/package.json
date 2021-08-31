@@ -17,5 +17,8 @@
   "engines": {
     "node": "14.x",
     "yarn": "1.x"
+  },
+  "dependencies": {
+    "stripe": "^8.171.0"
   }
 }
