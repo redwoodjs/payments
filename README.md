@@ -1,23 +1,4 @@
-# Payments
-A place to play around with a payment platform integration. 
+# redwoodjs-stripe POC
+A place to work on the Proof of Concept for an integration between Redwood and Stripe based off of a proposal. (WIP)
 
-This is a work in progress. Code not to be taken seriously
-
-## Setup
-
-/rw-payments:
-```
-$  yarn link
-```
-
-/sandbox
-```
-$  yarn link rw-payments
-```
-
-/sandbox/.env
-Add following variables:
-```
-STRIPE_SK_TEST=<STRIPE_SECRET_KEY>
-STRIPE_PK_TEST=<STRIPE_PUBLIC_KEY>
-```
+Disclaimer: Code not to be taken seriously because none of it works ;)
