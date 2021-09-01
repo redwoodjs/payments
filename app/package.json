@@ -20,5 +20,8 @@
   },
   "dependencies": {
     "stripe": "^8.171.0"
+  },
+  "scripts": {
+    "rw-setup-plugin-stripe": "node ./pluginSetup.js"
   }
 }
