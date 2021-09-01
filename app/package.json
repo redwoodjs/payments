@@ -22,6 +22,7 @@
     "stripe": "^8.171.0"
   },
   "scripts": {
-    "rw-setup-plugin-stripe": "node ./pluginSetup.js"
+    "rw-setup-plugin-stripe": "node ./pluginSetup.js",
+    "rw-dev": "rw dev & yarn node ./foo.js &"
   }
 }
