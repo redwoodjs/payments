@@ -1,7 +1,19 @@
 const readline = require("readline");
+ var fs = require('fs');
 
-const pluginSetup = () => {
-  const config = {}
+const appendToFile = (file, data) => {
+  console.log(data)
+  fs.appendFileSync(file, data, 'utf8', (err) => {
+    if (err){
+      console.log(err)
+    return}
+    else
+      // throw err;
+          {console.log('check env')}
+  });
+}
+
+const pluginSetup = async () => {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -14,19 +26,35 @@ const pluginSetup = () => {
   rl.question("What is your Stripe secret test key? ", function (stripeSK) {
     rl.question("What is your Stripe public test key? ", function (stripePK) {
       rl.question('What is your Stripe Webhook secret key?', (stripeWSK) => {
-        config['STRIPE_SK'] = stripeSK
-        config['STRIPE_PK'] = stripePK
-        config['STRIPE_WEBHOOK_SK'] = stripeWSK
+        const config = {
+          sk: stripeSK,
+          pk: stripePK,
+          ws: stripeWSK
+        }
+        // console.log(config)
+           appendToFile('.env',
+          `\n
+          STRIPE_SK=${config.sk}
+          STRIPE_PK=${config.pk}
+          STRIPE_WEBHOOK_SK=${config.ws}\n
+        `)
         rl.close()
       })
     })
   })
 
-  rl.on("close", function() {
+
+  rl.on("close", function () {
+
+
     console.log('All Done!!!');
     process.exit(0);
   });
 
 }
 pluginSetup();
+
+
+
+
 
