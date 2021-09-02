@@ -1,19 +1,17 @@
 const readline = require("readline");
  var fs = require('fs');
 
-const appendToFile = (file, data) => {
-  console.log(data)
+const appendToFileSync = (file, data, successMsg='File Updated') => {
   fs.appendFileSync(file, data, 'utf8', (err) => {
-    if (err){
-      console.log(err)
-    return}
-    else
-      // throw err;
-          {console.log('check env')}
+    if (err) throw err;
+    console.log(successMsg)
   });
 }
 
 const pluginSetup = async () => {
+  //STEPS NOT INCLUDED
+  // - Installing of package
+
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
@@ -23,31 +21,24 @@ const pluginSetup = async () => {
   console.log("(Not really but it will)")
   console.log('We are going to ask you a few questions about your Stripe account')
 
-  rl.question("What is your Stripe secret test key? ", function (stripeSK) {
-    rl.question("What is your Stripe public test key? ", function (stripePK) {
-      rl.question('What is your Stripe Webhook secret key?', (stripeWSK) => {
+  rl.question("What is your Stripe secret test key? ", stripeSK => {
+    rl.question("What is your Stripe public test key? ", stripePK => {
+      rl.question('What is your Stripe Webhook secret key?', stripeWSK => {
         const config = {
           sk: stripeSK,
           pk: stripePK,
           ws: stripeWSK
         }
-        // console.log(config)
-           appendToFile('.env',
-          `\n
-          STRIPE_SK=${config.sk}
-          STRIPE_PK=${config.pk}
-          STRIPE_WEBHOOK_SK=${config.ws}\n
-        `)
+        appendToFileSync('.env',
+          `STRIPE_SK=${config.sk}\nSTRIPE_PK=${config.pk}\nSTRIPE_WEBHOOK_SK=${config.ws}\n`,
+        '.env was successfully updated')
+
         rl.close()
       })
     })
   })
 
-
-  rl.on("close", function () {
-
-
-    console.log('All Done!!!');
+  rl.on("close", () => {
     process.exit(0);
   });
 
