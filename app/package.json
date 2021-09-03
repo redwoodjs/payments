@@ -19,10 +19,12 @@
     "yarn": "1.x"
   },
   "dependencies": {
-    "stripe": "^8.171.0"
+    "stripe": "^8.171.0",
+    "terminal-tab": "^0.0.8"
   },
   "scripts": {
-    "rw-setup-plugin-stripe": "node ./pluginSetup.js",
-    "rw-dev": "rw dev & yarn node ./foo.js &"
+    "rw-setup-plugin-stripe": "node ./plugin/stripe/setup.js",
+    "rw-listen": "node ./plugin/stripe/webhookListener.js",
+    "rw-dev": "yarn rw dev && yarn rw-listen"
   }
 }

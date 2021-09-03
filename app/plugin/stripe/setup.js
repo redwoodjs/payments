@@ -18,8 +18,6 @@ const pluginSetup = async () => {
   });
 
   console.log("Installing redwoodjs-stripe package")
-  console.log("(Not really but it will)")
-  console.log('We are going to ask you a few questions about your Stripe account')
 
   rl.question("What is your Stripe secret test key? ", stripeSK => {
     rl.question("What is your Stripe public test key? ", stripePK => {
@@ -31,7 +29,9 @@ const pluginSetup = async () => {
         }
         appendToFileSync('.env',
           `STRIPE_SK=${config.sk}\nSTRIPE_PK=${config.pk}\nSTRIPE_WEBHOOK_SK=${config.ws}\n`,
-        '.env was successfully updated')
+          '.env was successfully updated')
+
+        // Create webhook listening file
 
         rl.close()
       })
@@ -39,6 +39,7 @@ const pluginSetup = async () => {
   })
 
   rl.on("close", () => {
+    console.log('Config variables added to .env')
     process.exit(0);
   });
 

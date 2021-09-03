@@ -15822,6 +15822,14 @@ terminal-link@2.1.1, terminal-link@^2.0.0:
     ansi-escapes "^4.2.1"
     supports-hyperlinks "^2.0.0"
 
+terminal-tab@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/terminal-tab/-/terminal-tab-0.0.8.tgz#4b88fdff9c66ddc072feceac90291776c2bc4498"
+  integrity sha512-dSrlNjfl7PhwaOSCIk5f61qgwrH7X4q2iAwgxJmSOqsYe4/Rvsn+phZT0wouB1+4wjzfONw48ypRtsW03qOJVw==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    through "^2.3.6"
+
 terser-webpack-plugin@^1.4.3:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/terser-webpack-plugin/-/terser-webpack-plugin-1.4.5.tgz#a217aefaea330e734ffacb6120ec1fa312d6040b"
