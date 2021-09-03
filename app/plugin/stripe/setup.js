@@ -1,5 +1,5 @@
 const readline = require("readline");
- var fs = require('fs');
+var fs = require('fs');
 
 const appendToFileSync = (file, data, successMsg='File Updated') => {
   fs.appendFileSync(file, data, 'utf8', (err) => {
@@ -31,7 +31,7 @@ const pluginSetup = async () => {
           `STRIPE_SK=${config.sk}\nSTRIPE_PK=${config.pk}\nSTRIPE_WEBHOOK_SK=${config.ws}\n`,
           '.env was successfully updated')
 
-        // Create webhook listening file
+        // Create webhook listening function
 
         rl.close()
       })

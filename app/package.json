@@ -24,7 +24,7 @@
   },
   "scripts": {
     "rw-setup-plugin-stripe": "node ./plugin/stripe/setup.js",
-    "rw-listen": "node ./plugin/stripe/webhookListener.js",
-    "rw-dev": "yarn rw dev && yarn rw-listen"
+    "rw-listen": "stripe status && stripe listen --forward-to localhost:8911/stripe-webhooks",
+    "rw-dev": "(yarn rw dev & yarn rw-listen)"
   }
 }
