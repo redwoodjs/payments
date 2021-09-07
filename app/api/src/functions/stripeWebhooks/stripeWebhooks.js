@@ -1,5 +1,7 @@
 import { logger } from 'src/lib/logger'
-import stripeWebhookVerifier from '../../../../plugin/stripe/lib/index'
+// import stripeWebhookVerifier from '../../../../plugin/stripe/lib/index'
+const stripe = require('stripe')(process.env.STRIPE_SK)
+
 
 /**
  * The handler function is your code that processes http request events.
@@ -19,23 +21,20 @@ import stripeWebhookVerifier from '../../../../plugin/stripe/lib/index'
  */
 export const handler = async (event, context) => {
   logger.info('Invoked stripeWebhooks function')
-logger.info("========================================")
-  logger.info("EVENT")
-  // logger.info(JSON.parse(event.body))
-  const foo = stripeWebhookVerifier(event, context)
-  logger.info(foo)
-  logger.info("CONTEXT")
-  logger.info(context)
-  logger.info("######################################")
+    let stripeEvent
+    const sig = event.headers['stripe-signature'];
+    stripeEvent = stripe.webhooks.constructEvent(event.body, sig, process.env.STRIPE_WEBHOOK_SK);
+    logger.info("========================================")
+    logger.info(stripeEvent.type)
+    logger.info("######################################")
 
-  return {
-    statusCode: 200,
-    headers: {
+    return {
+      statusCode: 200,
+      headers: {
       'Content-Type': 'application/json',
-    },
-
-    body: JSON.stringify({
-      data: 'stripeWebhooks function',
-    }),
-  }
+      },
+      body: JSON.stringify({
+        data: 'stripeWebhooks function',
+      }),
+    }
 }
