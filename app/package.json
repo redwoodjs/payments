@@ -19,6 +19,7 @@
     "yarn": "1.x"
   },
   "dependencies": {
+    "fs-extra": "^10.0.0",
     "stripe": "^8.171.0",
     "terminal-tab": "^0.0.8"
   },

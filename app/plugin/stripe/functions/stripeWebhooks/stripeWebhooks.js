@@ -21,20 +21,13 @@ const stripe = require('stripe')(process.env.STRIPE_SK)
  */
 export const handler = async (event, context) => {
   logger.info('Invoked stripeWebhooks function')
-  let stripeEvent
-  const sig = event.headers['stripe-signature'];
-  stripeEvent = stripe.webhooks.constructEvent(event.body, sig, process.env.STRIPE_WEBHOOK_SK);
-  const type = stripeEvent.type
+    let stripeEvent
+    const sig = event.headers['stripe-signature'];
+    stripeEvent = stripe.webhooks.constructEvent(event.body, sig, process.env.STRIPE_WEBHOOK_SK);
+    logger.info("========================================")
+    logger.info(stripeEvent.type)
+    logger.info("######################################")
 
-  // Stripe event handler
-  switch (type) {
-    case 'payment_intent.succeeded':
-      console.log('Look at you being fancy')
-      break;
-    default:
-      console.log('Looks like you have a few webhooks to add')
-      break;
-  }
     return {
       statusCode: 200,
       headers: {
