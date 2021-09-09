@@ -5,7 +5,8 @@ const fs = require('fs')
 const fsx = require("fs-extra")
 
 const appendToFileSync = (file, data, successMsg='File Updated') => {
-  fs.appendFileSync(file, data, 'utf8', (err) => {
+  return fs.promises.appendFile(file, data, 'utf8')
+  .then(  (err) => {
     if (err) throw err;
     console.log(successMsg)
   })
@@ -34,14 +35,18 @@ const pluginSetup = async () => {
   }
 
   // add Stripe keys to .env
-  appendToFileSync('.env',
+  await appendToFileSync('.env',
     `STRIPE_SK=${config.sk}\nSTRIPE_PK=${config.pk}\nSTRIPE_WEBHOOK_SK=${config.ws}\n`,
-    '.env was successfully updated')
+    'Stripe Keys have been added to .env'
+  )
 
   // Copy webhook fn into app
   const targetDir = path.resolve(__dirname, '../../api/src/functions/stripeWebhooks')
   const srcDir = path.resolve(__dirname, './functions/stripeWebhooks')
-  await fsx.copy(srcDir, targetDir)
+  await fsx.copy(srcDir, targetDir, error => {
+    if (error) throw error
+    console.log('Stripe Webhook function successfully copied')
+  })
 
   rl.close()
 
