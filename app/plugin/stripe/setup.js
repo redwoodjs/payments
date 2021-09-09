@@ -7,7 +7,7 @@ const fsx = require("fs-extra")
 const appendToFileSync = (file, data, successMsg='File Updated') => {
   fs.appendFileSync(file, data, 'utf8', (err) => {
     if (err) throw err;
-    logger.info(successMsg)
+    console.log(successMsg)
   })
 }
 

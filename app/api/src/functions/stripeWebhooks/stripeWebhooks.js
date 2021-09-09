@@ -1,6 +1,6 @@
 import { logger } from 'src/lib/logger'
-// import stripeWebhookVerifier from '../../../../plugin/stripe/lib/index'
-const stripe = require('stripe')(process.env.STRIPE_SK)
+import handleStripeWebhooks from '../../../../plugin/stripe/lib/index'
+
 
 
 /**
@@ -19,29 +19,31 @@ const stripe = require('stripe')(process.env.STRIPE_SK)
  * @param { Context } context - contains information about the invocation,
  * function, and execution environment.
  */
-export const handler = async (event, context) => {
-  logger.info('Invoked stripeWebhooks function')
-  let stripeEvent
-  const sig = event.headers['stripe-signature'];
-  stripeEvent = stripe.webhooks.constructEvent(event.body, sig, process.env.STRIPE_WEBHOOK_SK);
-  const type = stripeEvent.type
 
-  // Stripe event handler
-  switch (type) {
-    case 'payment_intent.succeeded':
-      console.log('Look at you being fancy')
-      break;
-    default:
-      console.log('Looks like you have a few webhooks to add')
-      break;
-  }
+export const handler = async (event) => {
+  logger.info('Invoked stripeWebhooks function')
+  try {
+    const data = handleStripeWebhooks((event), {
+      'payment_intent.created': () => { console.log('Payment intent created callback')},
+      'charge.succeeded': () => { console.log('Charge succeeded callback')},
+      'payment_intent.succeeded': () => { console.log('payment intent succeeded callback')}
+    })
+
     return {
       statusCode: 200,
       headers: {
       'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        data: 'stripeWebhooks function',
+        data: data,
       }),
     }
+  } catch (error) {
+     return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: error.message,
+        })
+      }
+  }
 }
