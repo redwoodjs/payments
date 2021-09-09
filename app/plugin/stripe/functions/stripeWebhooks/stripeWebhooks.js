@@ -1,6 +1,5 @@
 import { logger } from 'src/lib/logger'
-// import stripeWebhookVerifier from '../../../../plugin/stripe/lib/index'
-const stripe = require('stripe')(process.env.STRIPE_SK)
+import handleStripeWebhook from '../../../../plugin/stripe/lib/index'
 
 
 /**
@@ -21,20 +20,20 @@ const stripe = require('stripe')(process.env.STRIPE_SK)
  */
 export const handler = async (event, context) => {
   logger.info('Invoked stripeWebhooks function')
-    let stripeEvent
-    const sig = event.headers['stripe-signature'];
-    stripeEvent = stripe.webhooks.constructEvent(event.body, sig, process.env.STRIPE_WEBHOOK_SK);
-    logger.info("========================================")
-    logger.info(stripeEvent.type)
-    logger.info("######################################")
 
-    return {
-      statusCode: 200,
-      headers: {
-      'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        data: 'stripeWebhooks function',
-      }),
-    }
+  const results = handleStripeWebhooks(event, {
+    'checkout.session.completed': (e) => logger.info(e.type),
+    'checkout.session.async_payment_succeeded': (e) => logger.info(e.type),
+    'checkout.session.async_payment_failed': (e) => logger.info(e.type)
+  })
+
+  return {
+    statusCode: 200,
+    headers: {
+    'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      data: results,
+    }),
+  }
 }
