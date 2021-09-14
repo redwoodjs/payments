@@ -21,6 +21,25 @@
   width: 80%;
   max-width: 2049px;
   margin: 0 auto;
+  position: relative;
+}
+
+.cart-drop-down {
+  position: absolute;
+  right: 0%;
+  border: black 1px solid;
+  padding: 0 1.2rem;
+  padding-bottom: 0.625rem;
+  background-color: #fafafa;
+  z-index: 300000000000000;
+}
+
+.cart-drop-down__list {
+
+}
+
+.cart-drop-down__list__item {
+
 }
 
 .row {

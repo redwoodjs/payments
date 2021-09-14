@@ -3,6 +3,7 @@ import { MetaTags } from '@redwoodjs/web'
 import { useState } from 'react'
 
 import SiteWrapper from 'src/components/SiteWrapper/SiteWrapper'
+import CartDropDown from 'src/components/CartDropDown/CartDropDown'
 
 const PublicLayout = ({ children }) => {
   const [cartVisibility, setCartVisibilty] = useState(false);
@@ -24,11 +25,12 @@ const PublicLayout = ({ children }) => {
           <Link to={routes.home()}><h1>The Farm Stall</h1></Link>
           <button className='cart-btn' onClick={() => onCartButtonClick()}>cart</button>
         </div>
+        {cartVisibility && (
+      <CartDropDown/>
+    )}
       </SiteWrapper>
     </header>
-    {cartVisibility && (
-      <div>Cart should be visible now</div>
-    )}
+
     <main>
       <SiteWrapper>
         {children}
