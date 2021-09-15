@@ -3881,7 +3881,7 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@>=8.1.0":
+"@types/node@*":
   version "16.7.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.8.tgz#2448be5f24fe6b77114632b6350fcd219334651e"
   integrity sha512-8upnoQU0OPzbIkm+ZMM0zCeFCkw2s3mS0IWdx0+AAaWqm4fkBb0UJp8Edl7FVKRamYbpJC/aVsHpKWBIbiC7Zg==
@@ -3890,6 +3890,11 @@
   version "16.6.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.6.0.tgz#0d5685f85066f94e97f19e8a67fe003c5fadacc4"
   integrity sha512-OyiZPohMMjZEYqcVo/UJ04GyAxXOJEZO/FpzyXxcH4r/ArrVoXHf4MbUrkLp0Tz7/p1mMKpo5zJ6ZHl8XBNthQ==
+
+"@types/node@>=8.1.0":
+  version "16.9.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.9.1.tgz#0611b37db4246c937feef529ddcc018cf8e35708"
+  integrity sha512-QpLcX9ZSsq3YYUUnD3nFDY8H7wctAhQj/TFKL8Ya8v5fMm3CFXxo8zStsLAl780ltoYoo1WvKUVGBQK+1ifr7g==
 
 "@types/node@^10.1.0":
   version "10.17.60"
@@ -15535,9 +15540,9 @@ strip-json-comments@~2.0.1:
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
 stripe@^8.171.0:
-  version "8.171.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.171.0.tgz#9c52d2e3928c7ebf708ce1f9eb2d3cc2f682f8bf"
-  integrity sha512-SriWXEVukmnrE40BoRe18Zsw9zftpnDlZlgxhZd6qJqP/RwN59op5YoW2mA0LE6Grxn8FH8RB9CXVxCAHNTk8w==
+  version "8.174.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-8.174.0.tgz#91d2e61b0217b1ee9fde2842582e0f1cf1dddc94"
+  integrity sha512-UFU5TuYH7XwUmSllUIcIKhhsvvhhjw9D6ZwVdfB74wU4VOOaWBiQqszkw6chaEFpdulUmbcAH5eZltV3HwOi7g==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.6.0"
@@ -15821,14 +15826,6 @@ terminal-link@2.1.1, terminal-link@^2.0.0:
   dependencies:
     ansi-escapes "^4.2.1"
     supports-hyperlinks "^2.0.0"
-
-terminal-tab@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/terminal-tab/-/terminal-tab-0.0.8.tgz#4b88fdff9c66ddc072feceac90291776c2bc4498"
-  integrity sha512-dSrlNjfl7PhwaOSCIk5f61qgwrH7X4q2iAwgxJmSOqsYe4/Rvsn+phZT0wouB1+4wjzfONw48ypRtsW03qOJVw==
-  dependencies:
-    lodash.debounce "^4.0.8"
-    through "^2.3.6"
 
 terser-webpack-plugin@^1.4.3:
   version "1.4.5"

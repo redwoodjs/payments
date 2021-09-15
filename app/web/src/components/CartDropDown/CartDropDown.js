@@ -1,6 +1,9 @@
+import {handleCheckoutSessionCreation} from '../../../../plugin/stripe/lib/index.js'
+
 const CartDropDown = () => {
   const onCheckoutButtonClick = () => {
-    console.log('checkout button clicked')
+    handleCheckoutSessionCreation()
+    // console.log('uuhhhh')
   }
 
   return (<div className='cart-drop-down'>
