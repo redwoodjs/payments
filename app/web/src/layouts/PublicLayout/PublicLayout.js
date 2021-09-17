@@ -25,9 +25,9 @@ const PublicLayout = ({ children }) => {
           <Link to={routes.home()}><h1>The Farm Stall</h1></Link>
           <button className='cart-btn' onClick={() => onCartButtonClick()}>cart</button>
         </div>
-        {cartVisibility && (
+
       <CartDropDown/>
-    )}
+
       </SiteWrapper>
     </header>
 

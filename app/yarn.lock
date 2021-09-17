@@ -3349,6 +3349,11 @@
     resolve-from "^5.0.0"
     store2 "^2.12.0"
 
+"@stripe/stripe-js@^1.17.1":
+  version "1.17.1"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.17.1.tgz#afcb7e86d0b05d1a7af53af89111abd2e8d437ae"
+  integrity sha512-c9MyDvdi5Xou0j0JPNy86NebtTDfh9o62Ifuzx6GSm2YO0oedBpy51WSyOue2L8Fb+mqESS5gd6mGVEIPUnXsA==
+
 "@szmarczak/http-timer@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@szmarczak/http-timer/-/http-timer-1.1.2.tgz#b1665e2c461a2cd92f4c1bbf50d5454de0d4b421"
