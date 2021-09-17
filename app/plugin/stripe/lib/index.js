@@ -30,9 +30,10 @@ export const handleCheckoutSessionCreation = async () => {
   })
 
   const session = await response.json()
-  console.log(session)
    const result = await stripey.redirectToCheckout({
       sessionId: session.id
    });
-  console.log(result)
+  if (result.error) {
+     console.log(result.error.message)
+   }
 }
