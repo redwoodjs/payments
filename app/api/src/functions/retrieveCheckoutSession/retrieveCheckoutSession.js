@@ -20,8 +20,7 @@ import { logger } from 'src/lib/logger'
 
 export const handler = async ({body}, context) => {
   logger.info('Invoked retrieveCheckoutSession function')
-console.log(JSON.parse(body).id)
-const session = await stripe.checkout.sessions.retrieve(JSON.parse(body).id);
+  const session = await stripe.checkout.sessions.retrieve(JSON.parse(body).id);
 
   return {
     statusCode: 200,
