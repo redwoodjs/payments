@@ -1,6 +1,5 @@
 import { logger } from 'src/lib/logger'
 
-
 /**
  * The handler function is your code that processes http request events.
  * You can use return and throw to send a response or error, respectively.
@@ -17,49 +16,17 @@ import { logger } from 'src/lib/logger'
  * @param { Context } context - contains information about the invocation,
  * function, and execution environment.
  */
+  const stripe = require('stripe')(process.env.STRIPE_SK);
 
-const stripe = require('stripe')(process.env.STRIPE_SK)
-
-const cartItems = [
-      {
-        price_data: {
-          product_data: {
-            name: 'Bag of Apples',
-          },
-          unit_amount: 3000,
-          currency: 'zar'
-        },
-        quantity: 1
-      },
-      {
-        price_data: {
-          product_data: {
-            name: 'Bunch of Bananas',
-          },
-          unit_amount: 2800,
-          currency: 'zar',
-        },
-        quantity: 1
-      },
-    ]
-
-export const handler = async (event, context) => {
-  logger.info('Invoked createCheckoutSession function')
-  const session = await stripe.checkout.sessions.create({
-    line_items: cartItems,
-    payment_method_types: [
-      'card',
-    ],
-    mode: 'payment',
-    success_url: `http://localhost:8910?success=true&sessionId={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:8910?success=false`,
-  });
+export const handler = async ({body}, context) => {
+  logger.info('Invoked retrieveCheckoutSession function')
+console.log(JSON.parse(body).id)
+const session = await stripe.checkout.sessions.retrieve(JSON.parse(body).id);
 
   return {
     statusCode: 200,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${process.env.STRIPE_SK}`
     },
     body: JSON.stringify(session),
   }
