@@ -20,12 +20,12 @@ import handleStripeWebhooks from '../../../../plugin/stripe/lib'
  */
 export const handler = async (event, context) => {
   logger.info('Invoked stripeWebhooks function')
-
-  const results = await handleStripeWebhooks(event, {
-    'checkout.session.completed': (e) => logger.info(e.type),
-    'checkout.session.async_payment_succeeded': (e) => logger.info(e.type),
-    'checkout.session.async_payment_failed': (e) => logger.info(e.type)
-  })
+  // Will look something like this
+  // const results = await handleStripeWebhooks(event, {
+  //   'checkout.session.completed': (e) => logger.info(e.type),
+  //   'checkout.session.async_payment_succeeded': (e) => logger.info(e.type),
+  //   'checkout.session.async_payment_failed': (e) => logger.info(e.type)
+  // })
 
   return {
     statusCode: 200,
