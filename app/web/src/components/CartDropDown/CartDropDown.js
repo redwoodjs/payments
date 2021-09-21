@@ -3,7 +3,6 @@ import {handleCheckoutSessionCreation} from '../../../../plugin/stripe/lib/index
 const CartDropDown = () => {
   const onCheckoutButtonClick = () => {
     handleCheckoutSessionCreation()
-    // console.log('uuhhhh')
   }
 
   return (<div className='cart-drop-down'>
