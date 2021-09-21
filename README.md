@@ -5,6 +5,8 @@ A place to work on the Proof of Concept for an integration between Redwood and S
 
 The official repo lives here : [redwoodjs-stripe](https://github.com/chrisvdm/redwoodjs-stripe)
 
+Proposal doc : [redwoodjs-stripe Readme](https://docs.google.com/document/d/14IagrLRbuTT8H6-aOKL7aBbf2zGKVnMeazjmFZPf0-0/edit?usp=sharing) (Viewing only)
+
 
 ### Try it out
 Some of the functionality can be used as more gets available this section will be updated. The commands used are placeholders for when/if API wishlist items can be fulfilled.
