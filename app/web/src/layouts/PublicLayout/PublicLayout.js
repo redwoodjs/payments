@@ -15,7 +15,7 @@ const PublicLayout = ({ children }) => {
       <SiteWrapper>
         <div className='row space-between bottom-border'>
           <Link to={routes.home()}><h1>The Farm Stall</h1></Link>
-          <Link className='cart-btn' to={routes.cart()}>cart</Link>
+          <Link className='cart-btn' to={routes.stripeCart()}>cart</Link>
         </div>
 
       </SiteWrapper>

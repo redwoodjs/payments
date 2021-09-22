@@ -33,7 +33,9 @@ export const handler = async (event, context) => {
     'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      data: event.body.type,
+      data: {
+        event: event.body.type
+      },
     }),
   }
 }

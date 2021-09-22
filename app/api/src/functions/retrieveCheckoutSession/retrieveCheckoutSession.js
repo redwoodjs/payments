@@ -1,6 +1,4 @@
 import { logger } from 'src/lib/logger'
-import handleStripeWebhooks from '../../../../plugin/stripe/lib/index'
-
 
 /**
  * The handler function is your code that processes http request events.
@@ -18,22 +16,17 @@ import handleStripeWebhooks from '../../../../plugin/stripe/lib/index'
  * @param { Context } context - contains information about the invocation,
  * function, and execution environment.
  */
-export const handler = async (event, context) => {
-  logger.info('Invoked stripeWebhooks function')
+  const stripe = require('stripe')(process.env.STRIPE_SK);
 
-  // const results = handleStripeWebhooks(event, {
-  //   'checkout.session.completed': (e) => logger.info(e.type),
-  //   'checkout.session.async_payment_succeeded': (e) => logger.info(e.type),
-  //   'checkout.session.async_payment_failed': (e) => logger.info(e.type)
-  // })
+export const handler = async ({body}, context) => {
+  logger.info('Invoked retrieveCheckoutSession function')
+  const session = await stripe.checkout.sessions.retrieve(JSON.parse(body).id);
 
   return {
     statusCode: 200,
     headers: {
-    'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      data: event.body.type,
-    }),
+    body: JSON.stringify(session),
   }
 }

@@ -1,22 +1,4 @@
-import { Link, routes, useParams } from '@redwoodjs/router'
-import { useEffect } from 'react'
-import {retrieveCheckoutSession} from '../../../../plugin/stripe/lib/retrieveCheckoutSession'
-
 const HomePage = () => {
-const { success, sessionId } = useParams()
-
-
-  useEffect(() => {
-    const fetchSessionData = async () => {
-      let sessionData
-      if (success === 'true') {
-        sessionData = await retrieveCheckoutSession(sessionId)
-        console.log(sessionData)
-      }
-    }
-    fetchSessionData()
-  }, [success])
-
   return (
     <>
       <h2>Produce for Sale</h2>
