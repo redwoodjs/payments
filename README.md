@@ -18,7 +18,7 @@ _Disclaimer: Code not to be taken seriously because none of it works properly ;)
 1. [Install Stripe CLI](https://stripe.com/docs/stripe-cli#install)
    
    `brew install stripe/stripe-cli/stripe`
-3. "Install" package and setup Stripe keys
+2. "Install" package and setup Stripe keys
 
    `yarn rw-setup-plugin-stripe`
    
@@ -30,7 +30,16 @@ _Disclaimer: Code not to be taken seriously because none of it works properly ;)
    Missing from this step
    - hooking webhook listening command into <code>yarn rw dev</code>
    
-3. Run app
+3. "Install" payment flow
+
+   `yarn rw-g-stripe-one-time-purchase-checkout`
+
+   What you should see:
+   - add createCheckoutSession and retrieveCheckoutSession functions to api functions folder
+   - adds a StripeCart page ([localhost:8910/stripe-cart](http://localhost:8910/stripe-cart))
+   - retrieves checkout session data on successful payment visible in console
+   
+4. Run app
   
     `yarn rw-dev`
     
