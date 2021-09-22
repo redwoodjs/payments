@@ -11,9 +11,7 @@ Proposal doc : [redwoodjs-stripe Readme](https://docs.google.com/document/d/14Ia
 ### Try it out
 Some of the functionality can be used as more gets available this section will be updated. The commands used are placeholders for when/if API wishlist items can be fulfilled.
 
-Payment flow generator command has not been added yet but you should be able to make one time purchase. 
-
-_Disclaimer: Code not to be taken seriously because none of it works properly ;). 99 Bugs_
+_Disclaimer: Do not try to break it. Literally held together with spit and wishful thinking ;)_
 
 1. [Install Stripe CLI](https://stripe.com/docs/stripe-cli#install)
    
@@ -44,12 +42,10 @@ _Disclaimer: Code not to be taken seriously because none of it works properly ;)
     `yarn rw-dev`
     
     What you should be able to do:
-    - Make one time purchase via Stripe Checkout using dummy data in api side by clicking checkout button in dropdown ( `<CartDropDown/>` )
+    - Make one time purchase via Stripe Checkout using dummy data in api side by clicking checkout button in StripeCartPage ([localhost:8910/stripe-cart](http://localhost:8910/stripe-cart))
     - Watch for webhooks in terminal
     - See success or cancel status in location bar after checkout
-    - Play around in 'functions/createCheckoutSession' 
-
-
+    - See the session object in console after successful payment
 
 
 ## Get Involved
