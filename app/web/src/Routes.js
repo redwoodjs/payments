@@ -13,6 +13,9 @@ import PublicLayout from 'src/layouts/PublicLayout/PublicLayout'
 const Routes = () => {
   return (
     <Router>
+      <Route path="/stripe-cart" page={StripeCartPage} name="stripeCart" />
+      <Route path="/stripe-test" page={StripeTestPage} name="stripeTest" />
+      <Route path="/stripe-test-page" page={StripeTestPagePage} name="stripeTestPage" />
       <Set wrap={PublicLayout}>
       <Route path="/cart" page={StripeCartPage} name="cart" />
       <Route path="/" page={HomePage} name="home" />

@@ -1,7 +1,7 @@
-import CartPage from './StripeCartPage'
+import StripeCartPage from './StripeCartPage'
 
 export const generated = () => {
-  return <CartPage />
+  return <StripeCartPage />
 }
 
-export default { title: 'Pages/CartPage' }
+export default { title: 'Pages/StripeCartPage' }
