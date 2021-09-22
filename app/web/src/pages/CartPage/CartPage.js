@@ -1,7 +1,12 @@
-import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
+import {handleCheckoutSessionCreation} from '../../../../plugin/stripe/lib/handleCheckoutSessionCreation'
+
 const CartPage = () => {
+  const onCheckoutButtonClick = () => {
+    handleCheckoutSessionCreation()
+  }
+
   return (
     <>
       <MetaTags
@@ -12,13 +17,13 @@ const CartPage = () => {
       />
 
       <h1>CartPage</h1>
-      <p>
-        Find me in <code>./web/src/pages/CartPage/CartPage.js</code>
-      </p>
-      <p>
-        My default route is named <code>cart</code>, link to me with `
-        <Link to={routes.cart()}>Cart</Link>`
-      </p>
+      <ul className='cart-drop-down__list list--no-style'>
+      <li className='cart-drop-down__list__item'>Item 1</li>
+      <li className='cart-drop-down__list__item'>Item 2</li>
+    </ul>
+    <button onClick={onCheckoutButtonClick}>
+      Checkout
+    </button>
     </>
   )
 }

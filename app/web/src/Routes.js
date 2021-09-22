@@ -15,8 +15,6 @@ const Routes = () => {
     <Router>
       <Set wrap={PublicLayout}>
       <Route path="/cart" page={CartPage} name="cart" />
-      <Route path="/product" page={ProductPage} name="product" />
-      <Route path="/about" page={AboutPage} name="about" />
       <Route path="/" page={HomePage} name="home" />
       </Set>
 
