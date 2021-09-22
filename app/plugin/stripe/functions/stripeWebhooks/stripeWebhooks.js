@@ -1,6 +1,5 @@
 import { logger } from 'src/lib/logger'
-import handleStripeWebhooks from '../../../../plugin/stripe/lib/index'
-
+// import handleStripeWebhooks from '../../lib/index'
 
 /**
  * The handler function is your code that processes http request events.
@@ -33,7 +32,9 @@ export const handler = async (event, context) => {
     'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      data: event.body.type,
+      data: {
+        event: event.body.type
+      },
     }),
   }
 }
