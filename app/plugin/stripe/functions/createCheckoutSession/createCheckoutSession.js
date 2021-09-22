@@ -20,7 +20,7 @@ import { logger } from 'src/lib/logger'
 
 const stripe = require('stripe')(process.env.STRIPE_SK)
 
-const getCartItems = () => ([
+const getCartItems = [
       {
         price_data: {
           product_data: {
@@ -41,13 +41,13 @@ const getCartItems = () => ([
         },
         quantity: 1
       },
-    ])
+    ]
 
 export const handler = async (event, context) => {
   logger.info('Invoked createCheckoutSession function')
 
   // Retrieve cart items from DB or wherever
-  const cartItems = await getCartItems()
+  const cartItems = getCartItems
 
   const session = await stripe.checkout.sessions.create({
     line_items: cartItems,
@@ -55,8 +55,8 @@ export const handler = async (event, context) => {
       'card',
     ],
     mode: 'payment',
-    success_url: `http://localhost:8910?success=true&sessionId={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:8910?success=false`,
+    success_url: `http://localhost:8910/stripe-cart?success=true&sessionId={CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://localhost:8910/stripe-cart?success=false`,
   });
 
   return {
