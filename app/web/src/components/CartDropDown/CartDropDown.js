@@ -1,4 +1,4 @@
-import {handleCheckoutSessionCreation} from '../../../../plugin/stripe/lib/index.js'
+import {handleCheckoutSessionCreation} from '../../../../plugin/stripe/lib/handleCheckoutSessionCreation'
 
 const CartDropDown = () => {
   const onCheckoutButtonClick = () => {

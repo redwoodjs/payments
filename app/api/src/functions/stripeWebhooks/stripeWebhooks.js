@@ -1,5 +1,5 @@
 import { logger } from 'src/lib/logger'
-import handleStripeWebhooks from '../../../../plugin/stripe/lib'
+import handleStripeWebhooks from '../../../../../plugin/stripe/lib'
 //  import handleStripeWebhooks from 'plugins/stripe/lib'
 
 /**
