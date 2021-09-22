@@ -1,4 +1,4 @@
-import CartPage from './CartPage'
+import CartPage from './StripeCartPage'
 
 export const generated = () => {
   return <CartPage />

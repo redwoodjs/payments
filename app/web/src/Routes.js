@@ -14,7 +14,7 @@ const Routes = () => {
   return (
     <Router>
       <Set wrap={PublicLayout}>
-      <Route path="/cart" page={CartPage} name="cart" />
+      <Route path="/cart" page={StripeCartPage} name="cart" />
       <Route path="/" page={HomePage} name="home" />
       </Set>
 
