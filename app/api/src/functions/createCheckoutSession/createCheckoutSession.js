@@ -52,7 +52,6 @@ export const handler = async (event, context) => {
   logger.info('Invoked createCheckoutSession function')
   const mode = JSON.parse(event.body).mode
 
-
   // Retrieve cart items from DB or wherever
   const cartItems = getCartItems[mode]
 
@@ -62,8 +61,8 @@ export const handler = async (event, context) => {
       'card',
     ],
     mode: mode,
-    success_url: `http://localhost:8910?success=true&sessionId={CHECKOUT_SESSION_ID}`,
-    cancel_url: `http://localhost:8910?success=false`,
+    success_url: `http://localhost:8910/stripe-cart?success=true&sessionId={CHECKOUT_SESSION_ID}`,
+    cancel_url: `http://localhost:8910/stripe-cart?success=false`,
   });
 
   return {
@@ -72,6 +71,6 @@ export const handler = async (event, context) => {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${process.env.STRIPE_SK}`
     },
-    body: JSON.stringify({derp:'derp'}),
+    body: JSON.stringify(session),
   }
 }
