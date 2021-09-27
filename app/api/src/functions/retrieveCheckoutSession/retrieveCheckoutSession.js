@@ -16,11 +16,11 @@ import { logger } from 'src/lib/logger'
  * @param { Context } context - contains information about the invocation,
  * function, and execution environment.
  */
-  const stripe = require('stripe')(process.env.STRIPE_SK);
+const stripe = require('stripe')(process.env.STRIPE_SK)
 
-export const handler = async ({body}, context) => {
+export const handler = async ({ body }) => {
   logger.info('Invoked retrieveCheckoutSession function')
-  const session = await stripe.checkout.sessions.retrieve(JSON.parse(body).id);
+  const session = await stripe.checkout.sessions.retrieve(JSON.parse(body).id)
 
   return {
     statusCode: 200,
