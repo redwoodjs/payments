@@ -29,6 +29,7 @@ export const handler = async (event, context) => {
   const portalSession = await stripe.billingPortal.sessions.create({
     customer: customerId,
     return_url: returnUrl,
+    configuration: process.env.STRIPE_PORTAL_ID,
   })
 
   return {

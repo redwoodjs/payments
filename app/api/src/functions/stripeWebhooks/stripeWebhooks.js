@@ -29,11 +29,11 @@ export const handler = async (event, context) => {
   return {
     statusCode: 200,
     headers: {
-    'Content-Type': 'application/json',
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       data: {
-        event: event.body.type
+        event: event.body.type,
       },
     }),
   }
