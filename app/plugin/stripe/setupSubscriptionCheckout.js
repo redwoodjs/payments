@@ -122,7 +122,7 @@ const subscriptionCheckoutSetup = async () => {
 
   // Scaffold out Customer Portal
   // fix command for payment generation
-  // Scaffol out StripeCart
+  // Scaffold out StripeCart
   // Generate functions
   // Refactor
 }
