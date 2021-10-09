@@ -22,7 +22,8 @@
     "@stripe/stripe-js": "^1.17.1",
     "fs-extra": "^10.0.0",
     "node-fetch": "^3.0.0",
-    "stripe": "^8.171.0"
+    "stripe": "^8.171.0",
+    "yargs": "^17.2.1"
   },
   "scripts": {
     "rw-setup-plugin-stripe": "node ./plugin/stripe/setup.js",
