@@ -1,7 +1,9 @@
 require('dotenv').config()
 const readline = require('readline')
 const { promisify } = require('util')
+const path = require('path')
 const fs = require('fs')
+const fsx = require('fs-extra')
 const stripe = require('stripe')(process.env.STRIPE_SK)
 
 const appendToFileSync = (file, data, successMsg = 'File Updated') => {
@@ -9,6 +11,21 @@ const appendToFileSync = (file, data, successMsg = 'File Updated') => {
     if (err) throw err
     console.log(successMsg)
   })
+}
+
+const copyFunctionDir = async (fn) => {
+  const targetDir = path.resolve(__dirname, `../../api/src/functions/${fn}`)
+  const srcDir = path.resolve(__dirname, `./functions/${fn}`)
+  const exists = await fsx.pathExists(targetDir)
+  if (!exists) {
+    await fsx.copy(srcDir, targetDir, (error) => {
+      if (error) throw error
+      console.log(`Stripe ${fn} function successfully copied`)
+    })
+  } else {
+    console.log(`The function \'${fn}\' already exists`)
+    return
+  }
 }
 
 const rl = readline.createInterface({
@@ -117,13 +134,18 @@ const subscriptionCheckoutSetup = async () => {
       'Stripe Customer Portal id has been added to .env'
     )
 
+    // Check for createCheckoutSession
+    //           retrieveCheckoutSession
+
+    // Copy createCustomerPortalSession to api/functionc folder
+    await copyFunctionDir('createCustomerPortalSession')
+
     return
   }
 
   // Scaffold out Customer Portal
   // fix command for payment generation
   // Scaffold out StripeCart
-  // Generate functions
   // Refactor
 }
 
