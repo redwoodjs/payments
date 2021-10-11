@@ -134,11 +134,10 @@ const subscriptionCheckoutSetup = async () => {
       'Stripe Customer Portal id has been added to .env'
     )
 
-    // Check for createCheckoutSession
-    //           retrieveCheckoutSession
-
     // Copy createCustomerPortalSession to api/functionc folder
     await copyFunctionDir('createCustomerPortalSession')
+    await copyFunctionDir('createCheckoutSession')
+    await copyFunctionDir('retrieveCheckoutSession')
 
     return
   }
