@@ -1,6 +1,7 @@
 require('dotenv').config()
 const readline = require('readline')
 const { promisify } = require('util')
+const { exec } = require('child_process')
 const path = require('path')
 const fs = require('fs')
 const fsx = require('fs-extra')
@@ -10,6 +11,17 @@ const appendToFileSync = (file, data, successMsg = 'File Updated') => {
   return fs.promises.appendFile(file, data, 'utf8').then((err) => {
     if (err) throw err
     console.log(successMsg)
+  })
+}
+
+const execSync = promisify((cmd, fn) => {
+  exec(cmd, (error, stdout, stderr) => fn(error, stdout, stderr))
+})
+
+const renderTemplateFile = (file, template, cb) => {
+  fs.readFile(template, (err, contents) => {
+    if (err) return cb(err)
+    fs.writeFile(file, contents, cb)
   })
 }
 
@@ -139,12 +151,38 @@ const subscriptionCheckoutSetup = async () => {
     await copyFunctionDir('createCheckoutSession')
     await copyFunctionDir('retrieveCheckoutSession')
 
+    // Generate StripeCart Page
+    await execSync(
+      'yarn rw g page StripeCart',
+      async (error, stdout, stderr) => {
+        if (error) {
+          console.log(error.message)
+        }
+        const stripeCartPageFile =
+          './web/src/pages/StripeCartPage/StripeCartPage.js'
+        const stripeCartPageFileTemplate = path.resolve(
+          __dirname,
+          './templates/StripeCartPageTemplate.js'
+        )
+
+        await renderTemplateFile(
+          stripeCartPageFile,
+          stripeCartPageFileTemplate,
+          (err) => {
+            if (err) {
+              throw err
+            }
+            console.log('StripeCartPage generated')
+          }
+        )
+      }
+    )
+
     return
   }
 
-  // Scaffold out Customer Portal
+  // Scaffold out Customer Portal ???
   // fix command for payment generation
-  // Scaffold out StripeCart
   // Refactor
 }
 
