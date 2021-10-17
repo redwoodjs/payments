@@ -120,25 +120,31 @@ const subscriptionCheckoutSetup = async () => {
 
   // TODO Check if productid exists
   try {
-    await stripe.products.retrieve('prod_rw10X1Y2Z3001bxxb')
+    await stripe.products.retrieve('prod_rw10X1Y2Z3001bx0b')
     console.log('Skipping Product Creation...')
     console.log('Skipping Customer Portal configuration...')
+    return
   } catch (err) {
     const priceResults = []
 
     console.log('Creating redwoodjs-stripe test Products and Prices')
 
-    for (const price of priceList) {
-      const result = await stripe.prices.create(price)
-      priceResults.push(result)
-    }
+    // for (const price of priceList) {
+    //   const result = await stripe.prices.create(price)
+    //   priceResults.push(result)
+    // }
 
     // TODO: Add prompt to ask to configure Customer Portal
     console.log('Configuring Customer Portal')
-    const configuration = await stripe.billingPortal.configurations.create(
-      getPortalConfig(priceResults)
-    )
+    console.log('========================================')
 
+    const configuration = await stripe.billingPortal.configurations
+      .create(getPortalConfig(priceResults))
+      .catch((err) => {
+        console.log(err)
+      })
+
+    console.info(configuration)
     // Save config id to env
     await appendToFileSync(
       '.env',
@@ -186,4 +192,4 @@ const subscriptionCheckoutSetup = async () => {
   // Refactor
 }
 
-subscriptionCheckoutSetup()
+module.exports = subscriptionCheckoutSetup

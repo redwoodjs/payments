@@ -30,6 +30,7 @@
     "rw-g-stripe-one-time-purchase-checkout": "yarn rw g page StripeCart && node ./plugin/stripe/setupOneTimePurchaseCheckout.js",
     "rw-listen": "stripe status && stripe listen --forward-to localhost:8911/stripeWebhooks",
     "rw-dev": "(yarn rw dev & yarn rw-listen)",
-    "config-portal": "node ./plugin/stripe/setupSubscriptionCheckout.js"
+    "config-portal": "node ./plugin/stripe/setupSubscriptionCheckout.js",
+    "rw-g-stripe-checkout": "node ./plugin/stripe/checkout.js"
   }
 }
