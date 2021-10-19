@@ -2,10 +2,17 @@ const fs = require('fs')
 const fsx = require('fs-extra')
 const path = require('path')
 
-const renderTemplateFile = (file, template, cb) => {
+const renderTemplateFile = (file, template, cb, vars) => {
   fs.readFile(template, (err, contents) => {
+    // replace %MODE%_ with mode
+    let result = contents
+    for (const [key, value] of Object.entries(vars)) {
+      const regex = new RegExp(`/\%${key.toUpperCase}\%/g`)
+      results = results.replace(regex, value)
+    }
+
     if (err) return cb(err)
-    fs.writeFile(file, contents, cb)
+    fs.writeFile(file, results, cb)
   })
 }
 
@@ -34,7 +41,8 @@ const oneTimePurchaseCheckoutSetup = async () => {
         throw err
       }
       console.log('StripeCartPage generated')
-    }
+    },
+    { mode: 'payment' }
   )
 
   // Copy createCheckoutSession function

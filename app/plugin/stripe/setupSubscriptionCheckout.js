@@ -18,11 +18,32 @@ const execSync = promisify((cmd, fn) => {
   exec(cmd, (error, stdout, stderr) => fn(error, stdout, stderr))
 })
 
-const renderTemplateFile = (file, template, cb) => {
+const renderTemplateFile = (file, template, cb, vars = {}) => {
   fs.readFile(template, (err, contents) => {
+    // replace %MODE%_ with mode
+    let results = contents.toString()
+    for (const [key, value] of Object.entries(vars)) {
+      results = results.replace(`STRIPE_${key.toUpperCase()}`, value)
+    }
+
     if (err) return cb(err)
-    fs.writeFile(file, contents, cb)
+    fs.writeFile(file, results, cb)
   })
+
+  // const content = fs.readFile(template, (err, contents) => {
+  //   if (err) {
+  //     return cb(err)
+  //   }
+  //   return contents
+  // })
+
+  // let results = content
+  // console.log(results)
+  // for (const [key, value] of Object.entries(vars)) {
+  //   const regex = new RegExp(`/\%${key.toUpperCase}\%/g`)
+  //   results = results.replace(regex, value)
+  // }
+  // fs.writeFile(file, results, cb)
 }
 
 const copyFunctionDir = async (fn) => {
@@ -60,7 +81,7 @@ const subscriptionCheckoutSetup = async () => {
         interval: 'month',
       },
       product_data: {
-        id: 'prod_rw10X1Y2Z3001bxxb',
+        id: 'prod_rw10X1Y2Z3001xvcx',
         name: 'Weekly Basket - 2 People',
       },
     },
@@ -71,7 +92,7 @@ const subscriptionCheckoutSetup = async () => {
         interval: 'month',
       },
       product_data: {
-        id: 'prod_rw20Z3Y2X1002axxa',
+        id: 'prod_rw20Z3Y2X1002xvcx',
         name: 'Weekly Basket - 4 People',
       },
     },
@@ -120,76 +141,63 @@ const subscriptionCheckoutSetup = async () => {
 
   // TODO Check if productid exists
   try {
-    await stripe.products.retrieve('prod_rw10X1Y2Z3001bx0b')
+    await stripe.products.retrieve('prod_rw10X1Y2Z3001xvcx')
     console.log('Skipping Product Creation...')
     console.log('Skipping Customer Portal configuration...')
-    return
   } catch (err) {
     const priceResults = []
-
     console.log('Creating redwoodjs-stripe test Products and Prices')
 
-    // for (const price of priceList) {
-    //   const result = await stripe.prices.create(price)
-    //   priceResults.push(result)
-    // }
+    for (const price of priceList) {
+      const result = await stripe.prices.create(price)
+      priceResults.push(result)
+    }
 
-    // TODO: Add prompt to ask to configure Customer Portal
     console.log('Configuring Customer Portal')
-    console.log('========================================')
-
     const configuration = await stripe.billingPortal.configurations
       .create(getPortalConfig(priceResults))
       .catch((err) => {
         console.log(err)
       })
 
-    console.info(configuration)
     // Save config id to env
     await appendToFileSync(
       '.env',
       `STRIPE_PORTAL_ID=${configuration.id}\n`,
       'Stripe Customer Portal id has been added to .env'
     )
+  }
+  // Copy createCustomerPortalSession to api/functionc folder
+  await copyFunctionDir('createCustomerPortalSession')
+  await copyFunctionDir('createCheckoutSession')
+  await copyFunctionDir('retrieveCheckoutSession')
 
-    // Copy createCustomerPortalSession to api/functionc folder
-    await copyFunctionDir('createCustomerPortalSession')
-    await copyFunctionDir('createCheckoutSession')
-    await copyFunctionDir('retrieveCheckoutSession')
-
-    // Generate StripeCart Page
-    await execSync(
-      'yarn rw g page StripeCart',
-      async (error, stdout, stderr) => {
-        if (error) {
-          console.log(error.message)
-        }
-        const stripeCartPageFile =
-          './web/src/pages/StripeCartPage/StripeCartPage.js'
-        const stripeCartPageFileTemplate = path.resolve(
-          __dirname,
-          './templates/StripeCartPageTemplate.js'
-        )
-
-        await renderTemplateFile(
-          stripeCartPageFile,
-          stripeCartPageFileTemplate,
-          (err) => {
-            if (err) {
-              throw err
-            }
-            console.log('StripeCartPage generated')
-          }
-        )
-      }
+  // Generate StripeCart Page
+  await execSync('yarn rw g page StripeCart', async (error, stdout, stderr) => {
+    if (error) {
+      console.log(error.message)
+    }
+    const stripeCartPageFile =
+      './web/src/pages/StripeCartPage/StripeCartPage.js'
+    const stripeCartPageFileTemplate = path.resolve(
+      __dirname,
+      './templates/StripeCartPageTemplate.js'
     )
 
-    return
-  }
-
-  // Scaffold out Customer Portal ???
-  // fix command for payment generation
-  // Refactor
+    await renderTemplateFile(
+      stripeCartPageFile,
+      stripeCartPageFileTemplate,
+      (err) => {
+        if (err) {
+          throw err
+        } else {
+          console.log('StripeCartPage generated')
+        }
+      },
+      { mode: `\'subscription\'` }
+    )
+    process.exit()
+  })
 }
 
 module.exports = subscriptionCheckoutSetup

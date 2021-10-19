@@ -10,19 +10,19 @@ const handleCheckoutSetup = () => {
   switch (mode) {
     case 'sub':
     case 'subscription':
-      setupSubscriptionCheckout()
-      break
+      return setupSubscriptionCheckout()
     case undefined:
     case 'once-off':
     case 'payment':
-      oneTimePurchaseCheckoutSetup()
-      break
+      return oneTimePurchaseCheckoutSetup()
     default:
       console.info(
         "You need to specify either 'subscription' or 'payment' as a mode"
       )
       break
   }
+
+  return
 }
 
 handleCheckoutSetup()
