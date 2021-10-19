@@ -1,22 +1,36 @@
 import { MetaTags } from '@redwoodjs/web'
+import React from 'react'
 import { useParams } from '@redwoodjs/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { retrieveCheckoutSession } from '../../../../plugin/stripe/lib/retrieveCheckoutSession'
 import { handleCheckoutSessionCreation } from '../../../../plugin/stripe/lib/handleCheckoutSessionCreation'
+import { handleCustomerPortalSessionCreation } from '../../../../plugin/stripe/lib/handleCustomerPortalSessionCreation'
 
 const StripeCartPage = () => {
+  const [sessionData, setSessionData] = useState({})
   const { success, sessionId } = useParams()
 
+  // checkoutMode is determined by the checkout generator command. It can either be "payment" or "subscription"
+  // Neccesary for creating a checkout session
+  const checkoutMode = STRIPE_MODE
+
   const onCheckoutButtonClick = () => {
-    handleCheckoutSessionCreation(STRIPE_MODE)
+    // Creates new checkout session dependent on "checkoutMode".
+    handleCheckoutSessionCreation(checkoutMode)
+  }
+
+  const onCustomerPortalButtonClick = () => {
+    // Sends customer id to serverless function
+    handleCustomerPortalSessionCreation(sessionData.customer)
   }
 
   useEffect(() => {
     const fetchSessionData = async () => {
-      let sessionData
       if (success === 'true') {
-        sessionData = await retrieveCheckoutSession(sessionId)
-        console.log(sessionData)
+        // Retrieves checkout session data using session id in params
+        const newSessionData = await retrieveCheckoutSession(sessionId)
+        setSessionData(newSessionData)
+        console.log(newSessionData)
       }
     }
     fetchSessionData()
@@ -36,6 +50,14 @@ const StripeCartPage = () => {
         <li className="cart-drop-down__list__item">Item 2</li>
       </ul>
       <button onClick={onCheckoutButtonClick}>Checkout</button>
+
+      {success && checkoutMode === 'subscription' && (
+        <>
+          <h3>Customer Portal</h3>
+          <p>To change Subscription settings click the button below</p>
+          <button onClick={onCustomerPortalButtonClick}>Customer Portal</button>
+        </>
+      )}
     </>
   )
 }

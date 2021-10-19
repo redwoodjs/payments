@@ -21,7 +21,7 @@ const execAsync = promisify((cmd, fn) => {
 const renderTemplateFile = async (file, template, vars = {}) => {
   const contents = await fsx.readFile(template)
 
-  // replace %MODE%_ with mode
+  // Templating
   let results = contents.toString()
   for (const [key, value] of Object.entries(vars)) {
     results = results.replace(`STRIPE_${key.toUpperCase()}`, value)
