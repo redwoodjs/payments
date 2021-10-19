@@ -8,42 +8,26 @@ const fsx = require('fs-extra')
 const stripe = require('stripe')(process.env.STRIPE_SK)
 
 const appendToFileSync = (file, data, successMsg = 'File Updated') => {
-  return fs.promises.appendFile(file, data, 'utf8').then((err) => {
+  return fsx.appendFile(file, data, 'utf8').then((err) => {
     if (err) throw err
     console.log(successMsg)
   })
 }
 
-const execSync = promisify((cmd, fn) => {
+const execAsync = promisify((cmd, fn) => {
   exec(cmd, (error, stdout, stderr) => fn(error, stdout, stderr))
 })
 
-const renderTemplateFile = (file, template, cb, vars = {}) => {
-  fs.readFile(template, (err, contents) => {
-    // replace %MODE%_ with mode
-    let results = contents.toString()
-    for (const [key, value] of Object.entries(vars)) {
-      results = results.replace(`STRIPE_${key.toUpperCase()}`, value)
-    }
+const renderTemplateFile = async (file, template, vars = {}) => {
+  const contents = await fsx.readFile(template)
 
-    if (err) return cb(err)
-    fs.writeFile(file, results, cb)
-  })
+  // replace %MODE%_ with mode
+  let results = contents.toString()
+  for (const [key, value] of Object.entries(vars)) {
+    results = results.replace(`STRIPE_${key.toUpperCase()}`, value)
+  }
 
-  // const content = fs.readFile(template, (err, contents) => {
-  //   if (err) {
-  //     return cb(err)
-  //   }
-  //   return contents
-  // })
-
-  // let results = content
-  // console.log(results)
-  // for (const [key, value] of Object.entries(vars)) {
-  //   const regex = new RegExp(`/\%${key.toUpperCase}\%/g`)
-  //   results = results.replace(regex, value)
-  // }
-  // fs.writeFile(file, results, cb)
+  await fsx.writeFile(file, results)
 }
 
 const copyFunctionDir = async (fn) => {
@@ -61,18 +45,18 @@ const copyFunctionDir = async (fn) => {
   }
 }
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-})
+// const rl = readline.createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// })
 
-const question = promisify((message, fn) =>
-  rl.question(message, (result) => fn(null, result))
-)
+// const question = promisify((message, fn) =>
+//   rl.question(message, (result) => fn(null, result))
+// )
+
 // process.env.STRIPE_SK
 const subscriptionCheckoutSetup = async () => {
   // Create products
-
   const priceList = [
     {
       currency: 'zar',
@@ -97,7 +81,6 @@ const subscriptionCheckoutSetup = async () => {
       },
     },
   ]
-
   const getPortalConfig = (prices) => {
     return {
       business_profile: {
@@ -138,7 +121,6 @@ const subscriptionCheckoutSetup = async () => {
       },
     }
   }
-
   // TODO Check if productid exists
   try {
     await stripe.products.retrieve('prod_rw10X1Y2Z3001xvcx')
@@ -147,19 +129,16 @@ const subscriptionCheckoutSetup = async () => {
   } catch (err) {
     const priceResults = []
     console.log('Creating redwoodjs-stripe test Products and Prices')
-
     for (const price of priceList) {
       const result = await stripe.prices.create(price)
       priceResults.push(result)
     }
-
     console.log('Configuring Customer Portal')
     const configuration = await stripe.billingPortal.configurations
       .create(getPortalConfig(priceResults))
       .catch((err) => {
         console.log(err)
       })
-
     // Save config id to env
     await appendToFileSync(
       '.env',
@@ -171,33 +150,17 @@ const subscriptionCheckoutSetup = async () => {
   await copyFunctionDir('createCustomerPortalSession')
   await copyFunctionDir('createCheckoutSession')
   await copyFunctionDir('retrieveCheckoutSession')
-
   // Generate StripeCart Page
-  await execSync('yarn rw g page StripeCart', async (error, stdout, stderr) => {
-    if (error) {
-      console.log(error.message)
-    }
-    const stripeCartPageFile =
-      './web/src/pages/StripeCartPage/StripeCartPage.js'
-    const stripeCartPageFileTemplate = path.resolve(
-      __dirname,
-      './templates/StripeCartPageTemplate.js'
-    )
-
-    await renderTemplateFile(
-      stripeCartPageFile,
-      stripeCartPageFileTemplate,
-      (err) => {
-        if (err) {
-          throw err
-        } else {
-          console.log('StripeCartPage generated')
-        }
-      },
-      { mode: `\'subscription\'` }
-    )
-    process.exit()
+  await execAsync('yarn rw g page StripeCart')
+  const stripeCartPageFile = './web/src/pages/StripeCartPage/StripeCartPage.js'
+  const stripeCartPageFileTemplate = path.resolve(
+    __dirname,
+    './templates/StripeCartPageTemplate.js'
+  )
+  await renderTemplateFile(stripeCartPageFile, stripeCartPageFileTemplate, {
+    mode: `\'subscription\'`,
   })
+  console.log('StripeCartPage generated')
 }
 
 module.exports = subscriptionCheckoutSetup

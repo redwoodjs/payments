@@ -2,13 +2,11 @@ const fs = require('fs')
 const fsx = require('fs-extra')
 const path = require('path')
 
-const renderTemplateFile = (file, template, cb, vars) => {
+const renderTemplateFile = (file, template, cb, vars = {}) => {
   fs.readFile(template, (err, contents) => {
-    // replace %MODE%_ with mode
-    let result = contents
+    let results = contents.toString()
     for (const [key, value] of Object.entries(vars)) {
-      const regex = new RegExp(`/\%${key.toUpperCase}\%/g`)
-      results = results.replace(regex, value)
+      results = results.replace(`STRIPE_${key.toUpperCase()}`, value)
     }
 
     if (err) return cb(err)
