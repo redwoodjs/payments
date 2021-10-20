@@ -3,6 +3,17 @@ const { exec } = require('child_process')
 const path = require('path')
 const fsx = require('fs-extra')
 
+const removeEnvVars = async (vars) => {
+  const envFile = path.resolve(__dirname, `../../../.env`)
+  const contents = await fsx.readFile(envFile)
+  const envLines = contents.toString().split('\n')
+  let newLines = envLines
+  vars.forEach((envVar) => {
+    newLines = newLines.filter((line) => !line.startsWith(envVar))
+  })
+  await fsx.writeFile(envFile, newLines)
+}
+
 const appendToFileSync = (file, data, successMsg = 'File Updated') => {
   return fsx.appendFile(file, data, 'utf8').then((err) => {
     if (err) throw err
@@ -46,4 +57,5 @@ module.exports = {
   copyFunctionDir,
   renderTemplateFile,
   execAsync,
+  removeEnvVars,
 }
