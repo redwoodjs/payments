@@ -1,14 +1,24 @@
 const stripe = require('stripe')(process.env.STRIPE_SK)
 
-export const handleStripeWebhooks = (event, webhooksObj) => {
- let stripeEvent
+const handleStripeWebhooks = (event, webhooksObj, returnCb) => {
+  let stripeEvent
   try {
-    const sig = event.headers['stripe-signature'];
-    stripeEvent = stripe.webhooks.constructEvent(event.body, sig, process.env.STRIPE_WEBHOOK_SK);
+    const sig = event.headers['stripe-signature']
+    stripeEvent = stripe.webhooks.constructEvent(
+      event.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SK
+    )
 
-    return webhooksObj[stripeEvent.type](event)
-
+    let results = {}
+    if (typeof webhooksObj[stripeEvent.type] !== 'undefined') {
+      results = webhooksObj[stripeEvent.type](event)
+    }
+    return returnCb(event, results)
   } catch (error) {
+    console.log(error)
     throw error
   }
 }
+
+module.exports = handleStripeWebhooks
