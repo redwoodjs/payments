@@ -29,13 +29,17 @@ _Disclaimer: Do not try to break it. Literally held together with spit and wishf
    - hooking webhook listening command into <code>yarn rw dev</code>
    
 3. "Install" payment flow
+   "checkout-mode" refers to the Stripe checkout session mode, this is used to determined the payment flow. It can be either "payment" (for once-off payments) or "subscription" (for subscriptions)
 
-   `yarn rw-g-stripe-one-time-purchase-checkout`
+   `yarn rw-g-stripe-checkout <checkout-mode>`
 
-   What you should see:
+   What you should see for all checkout-modes:
    - add createCheckoutSession and retrieveCheckoutSession functions to api functions folder
    - adds a StripeCart page ([localhost:8910/stripe-cart](http://localhost:8910/stripe-cart))
    - retrieves checkout session data on successful payment visible in console
+   - only for subcription payment flow ("subscription" checkout-mode)
+      - adds a createCustomerPortalSession function to api functionc folder
+      - after checking out successfully, a button to go to the Customer Portal will appear on the StripeCart page
    
 4. Run app
   
