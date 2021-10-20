@@ -1,58 +1,12 @@
 require('dotenv').config()
-const readline = require('readline')
-const { promisify } = require('util')
-const { exec } = require('child_process')
 const path = require('path')
-const fs = require('fs')
-const fsx = require('fs-extra')
 const stripe = require('stripe')(process.env.STRIPE_SK)
-
-const appendToFileSync = (file, data, successMsg = 'File Updated') => {
-  return fsx.appendFile(file, data, 'utf8').then((err) => {
-    if (err) throw err
-    console.log(successMsg)
-  })
-}
-
-const execAsync = promisify((cmd, fn) => {
-  exec(cmd, (error, stdout, stderr) => fn(error, stdout, stderr))
-})
-
-const renderTemplateFile = async (file, template, vars = {}) => {
-  const contents = await fsx.readFile(template)
-
-  // Templating
-  let results = contents.toString()
-  for (const [key, value] of Object.entries(vars)) {
-    results = results.replace(`STRIPE_${key.toUpperCase()}`, value)
-  }
-
-  await fsx.writeFile(file, results)
-}
-
-const copyFunctionDir = async (fn) => {
-  const targetDir = path.resolve(__dirname, `../../api/src/functions/${fn}`)
-  const srcDir = path.resolve(__dirname, `./functions/${fn}`)
-  const exists = await fsx.pathExists(targetDir)
-  if (!exists) {
-    await fsx.copy(srcDir, targetDir, (error) => {
-      if (error) throw error
-      console.log(`Stripe ${fn} function successfully copied`)
-    })
-  } else {
-    console.log(`The function \'${fn}\' already exists`)
-    return
-  }
-}
-
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// })
-
-// const question = promisify((message, fn) =>
-//   rl.question(message, (result) => fn(null, result))
-// )
+const {
+  appendToFileSync,
+  copyFunctionDir,
+  renderTemplateFile,
+  execAsync,
+} = require('./cmd/lib')
 
 // process.env.STRIPE_SK
 const subscriptionCheckoutSetup = async () => {
@@ -121,8 +75,9 @@ const subscriptionCheckoutSetup = async () => {
       },
     }
   }
-  // TODO Check if productid exists
+
   try {
+    // Check if products exists
     await stripe.products.retrieve('prod_rw10X1Y2Z3001xvcx')
     console.log('Skipping Product Creation...')
     console.log('Skipping Customer Portal configuration...')
@@ -146,12 +101,16 @@ const subscriptionCheckoutSetup = async () => {
       'Stripe Customer Portal id has been added to .env'
     )
   }
+
   // Copy createCustomerPortalSession to api/functionc folder
   await copyFunctionDir('createCustomerPortalSession')
   await copyFunctionDir('createCheckoutSession')
   await copyFunctionDir('retrieveCheckoutSession')
+
   // Generate StripeCart Page
   await execAsync('yarn rw g page StripeCart')
+
+  // Copy over StripeCartTemplate contents
   const stripeCartPageFile = './web/src/pages/StripeCartPage/StripeCartPage.js'
   const stripeCartPageFileTemplate = path.resolve(
     __dirname,
