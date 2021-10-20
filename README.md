@@ -51,6 +51,12 @@ _Disclaimer: Do not try to break it. Literally held together with spit and wishf
     - See success or cancel status in location bar after checkout
     - See the session object in console after successful payment
 
+### Extra
+
+`yarn rw-d-stripe-checkout <checkout-mode>`
+
+Destroys all code in app relating to a specific payment-flow/ checkout-mode
+
 
 ## Get Involved
 So you would like to be part of this project. At this point in time here's how:
