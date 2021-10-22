@@ -21,9 +21,9 @@ _Disclaimer: Do not try to break it. Literally held together with spit and wishf
    
    The following steps involving setting up with Stripe are temporary
    
-   Once Stripe CLI has been install you need to login into Stripe via CLI and follow the instructions
+   Once Stripe CLI has been install you need to login into Stripe via CLI and enter your Stripe api key
  
-   `stripe login`
+   `stripe login -i`
    
    To get your webhook secret, run following command and copy the returned webhook signing secret to a safe place. 
    
