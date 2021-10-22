@@ -4,6 +4,8 @@ const path = require('path')
 const fs = require('fs')
 const fsx = require('fs-extra')
 
+const { execAsync } = require('./cmd/lib')
+
 const appendToFileSync = (file, data, successMsg = 'File Updated') => {
   return fs.promises.appendFile(file, data, 'utf8').then((err) => {
     if (err) throw err
@@ -38,6 +40,13 @@ const pluginSetup = async () => {
   // const stripeWebhookSecretKey = await question(
   //   'What is your Stripe Webhook secret key?'
   // )
+  let stripeWebhookSecretKey
+  await execAsync('stripe listen --print-secret', (err, sout) => {
+    if (err) {
+      throw err
+    }
+    stripeWebhookSecretKey = sout
+  })
 
   const config = {
     sk: stripeSecretKey,
