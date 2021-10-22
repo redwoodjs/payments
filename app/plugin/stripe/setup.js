@@ -29,9 +29,15 @@ const pluginSetup = async () => {
   const stripePublicTestKey = await question(
     'What is your Stripe public test key?'
   )
-  const stripeWebhookSecretKey = await question(
-    'What is your Stripe Webhook secret key?'
-  )
+
+  // TODO: Login to Stripe using API key
+  // stripe login -i
+
+  // TODO: Get webhook secret
+  // stripe listen --print-secret
+  // const stripeWebhookSecretKey = await question(
+  //   'What is your Stripe Webhook secret key?'
+  // )
 
   const config = {
     sk: stripeSecretKey,
