@@ -26,7 +26,8 @@
     "yargs": "^17.2.1"
   },
   "scripts": {
-    "rw-setup-plugin-stripe": "node ./plugin/stripe/setup.js","rw-listen": "stripe status && stripe listen --forward-to localhost:8911/stripeWebhooks",
+    "rw-setup-plugin-stripe": "node ./plugin/stripe/setup.js",
+    "rw-listen": "stripe status && stripe listen --forward-to localhost:8911/stripeWebhooks",
     "rw-dev": "(yarn rw dev & yarn rw-listen)",
     "rw-g-stripe-checkout": "node ./plugin/stripe/checkout.js",
     "rw-d-stripe-checkout": "node ./plugin/stripe/destroy.js"
