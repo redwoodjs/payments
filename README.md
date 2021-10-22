@@ -9,14 +9,33 @@ Proposal doc : [redwoodjs-stripe Readme](https://docs.google.com/document/d/14Ia
 
 
 ### Try it out
-Some of the functionality can be used as more gets available this section will be updated. The commands used are placeholders for when/if API wishlist items can be fulfilled.
+Some of the functionality can be used as more gets available this section will be updated. The commands used are placeholders for when/if API wishlist items can be fulfilled. 
+
+If you haven't already got a Stripe account, now would be a good time to get one. Once you have made an account have your API keys ready. You can find them in your [Stripe Dashboard](https://dashboard.stripe.com/test/apikeys). 
 
 _Disclaimer: Do not try to break it. Literally held together with spit and wishful thinking ;)_
 
 1. [Install Stripe CLI](https://stripe.com/docs/stripe-cli#install)
    
    `brew install stripe/stripe-cli/stripe`
-2. "Install" package and setup Stripe keys
+   
+   The following steps involving setting up with Stripe are temporary
+   
+   Once Stripe CLI has been install you need to login into Stripe via CLI and follow the instructions
+ 
+   `stripe login`
+   
+   To get your webhook secret, run following command and copy the returned webhook signing secret to a safe place. 
+   
+   `stripe listen`
+   
+   Once you've copied over the webhook signing secret, you can cancel the listening process with `ctrl+c`
+   
+2. Clone this repo then navigate to the `app` folder
+   
+   `cd app`
+   
+3. "Install" package and setup with Stripe API keys.
 
    `yarn rw-setup-plugin-stripe`
    
