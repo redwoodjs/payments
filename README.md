@@ -27,9 +27,7 @@ _Disclaimer: Do not try to break it. Literally held together with spit and wishf
    
    To get your webhook secret, run following command and copy the returned webhook signing secret to a safe place. 
    
-   `stripe listen`
-   
-   Once you've copied over the webhook signing secret, you can cancel the listening process with `ctrl+c`
+   `stripe listen --print-secret`
    
 2. Clone this repo then navigate to the `app` folder
    
