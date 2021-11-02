@@ -27,6 +27,10 @@ _Disclaimer: Do not try to break it. Literally held together with spit and wishf
    
    `cd app`
    
+3. Install modules
+
+   `yarn install`
+   
 3. "Install" package and setup with Stripe API keys.
 
    `yarn rw-setup-plugin-stripe`
