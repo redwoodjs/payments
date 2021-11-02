@@ -19,15 +19,9 @@ _Disclaimer: Do not try to break it. Literally held together with spit and wishf
    
    `brew install stripe/stripe-cli/stripe`
    
-   The following steps involving setting up with Stripe are temporary
-   
    Once Stripe CLI has been install you need to login into Stripe via CLI and enter your Stripe api key
  
    `stripe login -i`
-   
-   To get your webhook secret, run following command and copy the returned webhook signing secret to a safe place. 
-   
-   `stripe listen --print-secret`
    
 2. Clone this repo then navigate to the `app` folder
    
