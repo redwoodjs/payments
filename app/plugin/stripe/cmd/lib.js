@@ -22,7 +22,7 @@ const appendToFileSync = (file, data, successMsg = 'File Updated') => {
 }
 
 const execAsync = promisify((cmd, fn) => {
-  exec(cmd, (error, stdout, stderr) => fn(error, stdout, stderr))
+  exec(cmd, (error, stdout, stderr) => fn(error, [stdout, stderr]))
 })
 
 const renderTemplateFile = async (file, template, vars = {}) => {

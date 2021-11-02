@@ -4,6 +4,8 @@ const path = require('path')
 const fs = require('fs')
 const fsx = require('fs-extra')
 
+const { execAsync } = require('./cmd/lib')
+
 const appendToFileSync = (file, data, successMsg = 'File Updated') => {
   return fs.promises.appendFile(file, data, 'utf8').then((err) => {
     if (err) throw err
@@ -25,13 +27,16 @@ const pluginSetup = async () => {
   // - Installing of package
 
   console.log('Installing redwoodjs-stripe package')
-  const stripeSecretKey = await question('What is your Stripe secret test key?')
+  console.log('Login to your Stripe Dashboard to see your API keys')
+  const stripeSecretKey = await question('Enter your Stripe secret test key: ')
   const stripePublicTestKey = await question(
-    'What is your Stripe public test key?'
+    'Enter your Stripe public test key: '
   )
-  const stripeWebhookSecretKey = await question(
-    'What is your Stripe Webhook secret key?'
-  )
+
+  console.log('Fetching webhook secret')
+  const [sout] = await execAsync('stripe listen --print-secret')
+
+  const stripeWebhookSecretKey = sout
 
   const config = {
     sk: stripeSecretKey,

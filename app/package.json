@@ -30,6 +30,7 @@
     "rw-listen": "stripe status && stripe listen --forward-to localhost:8911/stripeWebhooks",
     "rw-dev": "(yarn rw dev & yarn rw-listen)",
     "rw-g-stripe-checkout": "node ./plugin/stripe/checkout.js",
-    "rw-d-stripe-checkout": "node ./plugin/stripe/destroy.js"
+    "rw-d-stripe-checkout": "node ./plugin/stripe/destroy.js",
+    "stripe-setup": "node ./plugin/stripe/testSetup.js"
   }
 }
