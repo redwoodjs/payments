@@ -22,23 +22,20 @@ import handleStripeWebhooks from '../../../../plugin/stripe/lib/handleStripeWebh
  * Stripe documentation recommends making any calls to db for syncing inside of webhooks
  */
 export const handler = async (event, context) => {
-  const response = await handleStripeWebhooks(event, context, {
-    'checkout.session.completed': (e) => logger.info(e.type),
-    'checkout.session.async_payment_succeeded': (e) => logger.info(e.type),
-    'checkout.session.async_payment_failed': (e) => logger.info(e.type),
-    'payment_intent.created': (e) => 23,
+  // Create services to handle webhooks
+  const results = await handleStripeWebhooks(event, context, {
+    'checkout.session.completed': (e) => e.type,
+    'checkout.session.async_payment_succeeded': (e) => e.type,
+    'checkout.session.async_payment_failed': (e) => e.type,
   })
 
-  console.log(response)
   return {
     statusCode: 200,
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      data: {
-        event: event.body.type,
-      },
+      data: results,
     }),
   }
 }
